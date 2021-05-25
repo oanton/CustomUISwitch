@@ -21,7 +21,7 @@ public class CustomSwitch: UIControl {
     
     public var animationDuration: Double = 0.5
     
-    public var valueChanged: ((isOn: Bool) -> Void)? = nil
+    public var valueChanged: ((_ isOn: Bool) -> Void)? = nil
 
     
     @IBInspectable  public var padding: CGFloat = 1 {
@@ -223,12 +223,10 @@ extension CustomSwitch {
         
         self.animate()
         
-        self.valueChanged?(self.isOn)
-        
         return true
     }
     
-    func setOn(on:Bool, animated:Bool) {
+    public func setOn(on:Bool, animated:Bool) {
         
         switch animated {
         case true:
@@ -263,6 +261,7 @@ extension CustomSwitch {
     private func completeAction() {
         self.isAnimating = false
         self.sendActions(for: UIControl.Event.valueChanged)
+        self.valueChanged?(self.isOn)
     }
     
 }
