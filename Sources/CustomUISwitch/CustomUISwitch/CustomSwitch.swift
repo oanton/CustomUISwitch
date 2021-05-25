@@ -61,9 +61,15 @@ public class CustomSwitch: UIControl {
     }
     
     // thumb properties
-    @IBInspectable public var thumbTintColor: UIColor = UIColor.white {
+    @IBInspectable public var thumbOnTintColor: UIColor = UIColor.white {
         didSet {
-            self.thumbView.backgroundColor = self.thumbTintColor
+            self.setupUI()
+        }
+    }
+    
+    @IBInspectable public var thumbOffTintColor: UIColor = UIColor.white {
+        didSet {
+            self.setupUI()
         }
     }
     
@@ -184,7 +190,7 @@ extension CustomSwitch {
         self.clipsToBounds = false
         
         // configure thumb view
-        self.thumbView.backgroundColor = self.thumbTintColor
+        self.thumbView.backgroundColor = self.isOn ? self.thumbOnTintColor : self.thumbOffTintColor
         self.thumbView.isUserInteractionEnabled = false
         
         // dodati kasnije
@@ -244,6 +250,7 @@ extension CustomSwitch {
     private func setupViewsOnAction() {
         self.thumbView.frame.origin.x = self.isOn ? self.onPoint.x : self.offPoint.x
         self.backgroundColor = self.isOn ? self.onTintColor : self.offTintColor
+        self.thumbView.backgroundColor = self.isOn ? self.thumbOnTintColor : self.thumbOffTintColor
         self.setOnOffImageFrame()
     }
 
@@ -263,6 +270,7 @@ extension CustomSwitch {
         if !self.isAnimating {
             self.layer.cornerRadius = self.bounds.size.height * self.cornerRadius
             self.backgroundColor = self.isOn ? self.onTintColor : self.offTintColor
+            self.thumbView.backgroundColor = self.isOn ? self.thumbOnTintColor : self.thumbOffTintColor
             
             // thumb managment
             // get thumb size, if none set, use one from bounds
