@@ -21,6 +21,9 @@ public class CustomSwitch: UIControl {
     
     public var animationDuration: Double = 0.5
     
+    public var valueChanged: ((isOn: Bool) -> Void)? = nil
+
+    
     @IBInspectable  public var padding: CGFloat = 1 {
         didSet {
             self.layoutSubviews()
@@ -219,6 +222,9 @@ extension CustomSwitch {
         super.beginTracking(touch, with: event)
         
         self.animate()
+        
+        self.valueChanged?(self.isOn)
+        
         return true
     }
     
