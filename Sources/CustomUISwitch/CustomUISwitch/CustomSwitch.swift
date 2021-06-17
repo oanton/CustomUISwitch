@@ -226,6 +226,11 @@ extension CustomSwitch {
         return true
     }
     
+    public func setOn(on:Bool) {
+        self.isOn = on
+        self.setupViewsOnAction()
+    }
+    
     public func setOn(on:Bool, animated:Bool) {
         
         switch animated {
